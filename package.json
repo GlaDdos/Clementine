@@ -1,0 +1,24 @@
+{
+  "name": "clementine-gladdos",
+  "version": "1.0.0",
+  "description": "just trying to build clementine js with a tutorial ",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "to be added"
+  },
+  "keywords": [
+    "clementine",
+    "js",
+    "node"
+  ],
+  "author": "GlaDdos",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.13.4",
+    "mongodb": "^2.1.16"
+  }
+}
