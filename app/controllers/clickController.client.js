@@ -1,55 +1,58 @@
 'use strict';
 
-(function (){
-  var addButton = document.querySelector('.btn-add');
-  var deleteButton = document.querySelector('.btn-delete');
-  var clickNbr = document.querySelector('#click-nbr');
-  var apiURL = 'http://localhost:3000/api/clicks';
-  
-  function ready (fn){
-    if(typeof fn !== 'function'){
-      return;
-    }
+(function () {
 
-    if(document.readyState === 'complete'){
-      return fn();
-    }
+   var addButton = document.querySelector('.btn-add');
+   var deleteButton = document.querySelector('.btn-delete');
+   var clickNbr = document.querySelector('#click-nbr');
+   var apiUrl = 'http://localhost:3000/api/clicks';
 
-    document.addEventListener('DOMContentLoaded', fn, false);
-  }
-
-  function ajaxRequest (method, url, callback){
-    var xmlhttp = new XMLHttpRequest();
-
-    xmlhttp.onreadystatechange = function (){
-      if( xmlhttp.readyState === 4 && xmlhttp.status === 200){
-        callback(xmlhttp.response);
+   function ready (fn) {
+      if (typeof fn !== 'function') {
+         return;
       }
-    };
 
-    xmlhttp.open(method, url, true);
-    xmlhttp.send();
-  }
+      if (document.readyState === 'complete') {
+         return fn();
+      }
 
-  function updateClickCount (data){
-    var clicksObject = JSON.parse(data);
-    clickNbr.innerHTML = clicksObject.clicks;
-  }
+      document.addEventListener('DOMContentLoaded', fn, false);
+   }
 
-  ready(ajaxRequest('GET', apiURL, updateClickCount));
+   function ajaxRequest (method, url, callback) {
+      var xmlhttp = new XMLHttpRequest();
 
-  addButton.addEventListener('click', function (){
-    console.log('clicked');
-    ajaxRequest('POST', apiURL, function (){
-      ajaxRequest('GET', apiURL, updateClickCount)
-    });
-  }, false );
+      xmlhttp.onreadystatechange = function () {
+         if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
+            callback(xmlhttp.response);
+         }
+      };
 
-  deleteButton.addEventListener('click', function (){
+      xmlhttp.open(method, url, true);
+      xmlhttp.send();
+   }
 
-    ajaxRequest('DELETE', apiURL, function (){
-      ajaxRequest('GET', apiURL, updateClickCount);
-    });
-  }, false);
+   function updateClickCount (data) {
+      var clicksObject = JSON.parse(data);
+      clickNbr.innerHTML = clicksObject.clicks;
+   }
+
+   ready(ajaxRequest('GET', apiUrl, updateClickCount));
+
+   addButton.addEventListener('click', function () {
+
+      ajaxRequest('POST', apiUrl, function () {
+         ajaxRequest('GET', apiUrl, updateClickCount);
+      });
+
+   }, false);
+
+   deleteButton.addEventListener('click', function () {
+
+      ajaxRequest('DELETE', apiUrl, function () {
+         ajaxRequest('GET', apiUrl, updateClickCount);
+      });
+
+   }, false);
 
 })();
